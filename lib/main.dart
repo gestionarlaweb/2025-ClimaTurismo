@@ -170,7 +170,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
         error = 'Error al obtener datos.';
         isLoading = false;
       });
-      // ignore: avoid_print
       print('Error: $e');
     }
   }
@@ -180,20 +179,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
     final city = Provider.of<LocationProvider>(context).city;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Resultados para "$city"'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.chat),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ChatScreen()),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text('Resultados para "$city"')),
       body:
           isLoading
               ? const Center(child: CircularProgressIndicator())
@@ -228,129 +214,6 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   ),
                 ],
               ),
-    );
-  }
-}
-
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _controller = TextEditingController();
-  final List<Map<String, String>> messages = [];
-
-  Future<void> sendMessage(String content) async {
-    if (content.isEmpty || content.length > 500) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('El mensaje es demasiado largo o está vacío.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    setState(() {
-      messages.add({'role': 'user', 'content': content});
-    });
-    _controller.clear();
-
-    final apiKey = 'AIzaSyBylbW1Mj3vp4_crbyrINKYkSEHxwQHEKM';
-    final url = Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$apiKey',
-    );
-
-    final headers = {'Content-Type': 'application/json'};
-    final body = json.encode({
-      'contents': [
-        {
-          'parts': [
-            {'text': content},
-          ],
-        },
-      ],
-    });
-
-    try {
-      final response = await http.post(url, headers: headers, body: body);
-      final data = json.decode(response.body);
-
-      final reply =
-          data['candidates']?[0]?['content']?['parts']?[0]?['text'] ??
-          'Respuesta vacía.';
-      // ignore: avoid_print
-      print('Gemini response: $data');
-
-      setState(() {
-        messages.add({'role': 'assistant', 'content': reply});
-      });
-    } catch (e) {
-      setState(() {
-        messages.add({
-          'role': 'assistant',
-          'content': 'Error al conectar con Gemini.',
-        });
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Chat con ChatGPT')),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final msg = messages[index];
-                final isUser = msg['role'] == 'user';
-                return Align(
-                  alignment:
-                      isUser ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    decoration: BoxDecoration(
-                      color: isUser ? Colors.blue[100] : Colors.grey[300],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(msg['content'] ?? ''),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Escribe tu mensaje...',
-                      border: OutlineInputBorder(),
-                    ),
-                    onSubmitted: sendMessage,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => sendMessage(_controller.text),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
