@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -155,9 +156,17 @@ class _ResultsScreenState extends State<ResultsScreen> {
       List<Map<String, String>> categorizedRecommendations = [];
       for (var place in placesData['results']) {
         final name = place['name'];
+        final geocodes = place['geocodes']['main'];
+        final lat = geocodes['latitude'];
+        final lon = geocodes['longitude'];
         final categories = place['categories'] as List<dynamic>;
         final category = categories.isNotEmpty ? categories[0]['name'] : 'Otro';
-        categorizedRecommendations.add({'name': name, 'type': category});
+        categorizedRecommendations.add({
+          'name': name,
+          'type': category,
+          'lat': lat.toString(),
+          'lon': lon.toString(),
+        });
       }
 
       setState(() {
@@ -171,6 +180,17 @@ class _ResultsScreenState extends State<ResultsScreen> {
         isLoading = false;
       });
       print('Error: $e');
+    }
+  }
+
+  Future<void> _openMap(String lat, String lon) async {
+    final Uri url = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lon',
+    );
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No se pudo abrir el mapa';
     }
   }
 
@@ -207,7 +227,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   ),
                   ...recommendations.map(
                     (item) => ListTile(
-                      leading: const Icon(Icons.place),
+                      leading: IconButton(
+                        icon: const Icon(Icons.place),
+                        onPressed: () => _openMap(item['lat']!, item['lon']!),
+                      ),
                       title: Text(item['name'] ?? ''),
                       subtitle: Text(item['type'] ?? ''),
                     ),
