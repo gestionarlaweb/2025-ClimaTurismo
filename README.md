@@ -50,7 +50,7 @@ Una aplicación Flutter que permite al usuario consultar el clima semanal de cua
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/gestionarlaweb/2025-2025-ClimaTurismo.git
+git clone https://github.com/gestionarlaweb/2025-ClimaTurismo.git
 cd clima_turismo
 ```
 
@@ -102,7 +102,7 @@ git push -u origin main
 Este error ocurre cuando ya has configurado una URL remota. Puedes solucionarlo con:
 ```bash
 git remote remove origin
-git remote add origin https://github.com/gestionarlaweb/2025-2025-ClimaTurismo.git
+git remote add origin https://github.com/gestionarlaweb/2025-ClimaTurismo.git
 ```
 
 ### ❌ Error: RPC failed; HTTP 400 curl 22
