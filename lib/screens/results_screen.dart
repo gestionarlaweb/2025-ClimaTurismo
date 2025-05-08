@@ -85,7 +85,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                   }),
                   const SizedBox(height: 20),
                   const Text(
-                    'Donde comer y dormir:',
+                    'Donde comer o dormir:',
                     style: AppStyles.sectionTitle,
                   ),
                   ...recommendations.map(
