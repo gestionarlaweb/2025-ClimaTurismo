@@ -37,16 +37,10 @@ Una aplicación Flutter que permite al usuario consultar el clima semanal de cua
 
 ## 🧭 Capturas de pantalla
 
-<table>
-  <tr>
-    <td><img src="https://files.oaiusercontent.com/file_000000009e34620a98287b92c4272445/A_screenshot_of_a_weather_and_tourism_mobile_appli.png" width="300"/></td>
-    <td><img src="https://files.oaiusercontent.com/file_000000009e34620a98287b92c4272445/A_screenshot_of_a_weather_and_tourism_mobile_appli.png" width="300"/></td>
-  </tr>
-  <tr>
-    <td><img src="assets/screens/clima.png" width="300"/></td>
-    <td><img src="assets/screens/recomendaciones.png" width="300"/></td>
-  </tr>
-</table>
+| Clima semanal | Recomendaciones |
+|---------------|------------------|
+| ![clima](https://files.oaiusercontent.com/file_000000009e34620a98287b92c4272445/A_screenshot_of_a_weather_and_tourism_mobile_appli.png) | ![recomendaciones](https://files.oaiusercontent.com/file_000000009e34620a98287b92c4272445/A_screenshot_of_a_weather_and_tourism_mobile_appli.png) |
+| ![clima](assets/screens/clima.png) | ![recomendaciones](assets/screens/recomendaciones.png) |
 
 *(Asegúrate de colocar las imágenes en `assets/screens/` y declarar la carpeta en `pubspec.yaml`)*
 
@@ -56,7 +50,7 @@ Una aplicación Flutter que permite al usuario consultar el clima semanal de cua
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu_usuario/clima_turismo.git
+git clone https://github.com/gestionarlaweb/2025-ClimaTurismo.git
 cd clima_turismo
 ```
 
@@ -100,10 +94,29 @@ git remote add origin https://github.com/tu_usuario/tu_repo.git
 ```
 
 ### ❌ Error: RPC failed; HTTP 400 curl 22
-Esto suele ocurrir si el repositorio remoto ya tiene archivos (como un README creado desde GitHub). Solución:
+Este error puede deberse a:
+- Tamaño excesivo del paquete (`.png`, `.json`, etc.).
+- Conexión inestable o límite de GitHub superado.
+- Conflictos con archivos ya existentes en el remoto.
+
+#### 🔁 Solución 1: Aumentar buffer HTTP
+```bash
+git config --global http.postBuffer 524288000
+```
+
+#### 🔁 Solución 2: Fusionar con repositorio remoto
 ```bash
 git pull origin main --allow-unrelated-histories
-git push -u origin main
+```
+
+#### 🔁 Solución 3: Forzar push inicial (solo si estás seguro)
+```bash
+git push --force -u origin main
+```
+
+#### 🔁 Solución 4: Si el repositorio remoto no tiene rama `main`
+```bash
+git push --set-upstream origin main
 ```
 
 ---
