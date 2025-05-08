@@ -50,7 +50,7 @@ Una aplicación Flutter que permite al usuario consultar el clima semanal de cua
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/gestionarlaweb/2025-Clima.git
+git clone https://github.com/tu_usuario/clima_turismo.git
 cd clima_turismo
 ```
 
@@ -86,11 +86,23 @@ flutter run
 
 ## 🛠️ Problemas comunes con Git
 
+### ❌ Error: no tracking information / no upstream branch
+Este mensaje aparece cuando la rama local no está conectada con la rama remota.
+
+#### 🔁 Solución
+```bash
+git branch --set-upstream-to=origin/main main
+```
+O simplemente:
+```bash
+git push -u origin main
+```
+
 ### ❌ Error: remote origin already exists
 Este error ocurre cuando ya has configurado una URL remota. Puedes solucionarlo con:
 ```bash
 git remote remove origin
-git remote add origin https://github.com/tu_usuario/tu_repo.git
+git remote add origin https://github.com/gestionarlaweb/2025-2025-ClimaTurismo.git
 ```
 
 ### ❌ Error: RPC failed; HTTP 400 curl 22
@@ -117,6 +129,8 @@ git push --force -u origin main
 #### 🔁 Solución 4: Si el repositorio remoto no tiene rama `main`
 ```bash
 git push --set-upstream origin main
+git pull origin main --allow-unrelated-histories
+git push -u origin main
 ```
 
 ---
