@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/location_provider.dart';
-import 'results_screen.dart';
+import '../screens/results_screen.dart';
+import '../styles/app_styles.dart';
 
 class LocationInputScreen extends StatefulWidget {
   const LocationInputScreen({super.key});
@@ -28,7 +29,12 @@ class _LocationInputScreenState extends State<LocationInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('¿Dónde estás o a dónde vas?')),
+      appBar: AppBar(
+        title: const Text(
+          '¿Dónde estás o a dónde vas?',
+          style: AppStyles.sectionTitle,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -36,16 +42,22 @@ class _LocationInputScreenState extends State<LocationInputScreen> {
           children: [
             TextField(
               controller: _controller,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Ciudad o lugar',
-                border: OutlineInputBorder(),
+                labelStyle: AppStyles.inputLabel,
+                border: AppStyles.inputBorder,
+                focusedBorder: AppStyles.inputBorder,
               ),
               onSubmitted: (_) => _submitLocation(),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitLocation,
-              child: const Text('Buscar clima y recomendaciones'),
+              style: AppStyles.elevatedButton,
+              child: const Text(
+                'Buscar clima y recomendaciones',
+                style: AppStyles.forecastText,
+              ),
             ),
           ],
         ),
