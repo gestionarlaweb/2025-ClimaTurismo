@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => LocationProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Clima Turismo',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: const LocationInputScreen(),
