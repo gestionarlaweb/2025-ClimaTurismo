@@ -50,7 +50,7 @@ Una aplicación Flutter que permite al usuario consultar el clima semanal de cua
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu_usuario/clima_turismo.git
+git clone https://github.com/gestionarlaweb/2025-2025-ClimaTurismo.git
 cd clima_turismo
 ```
 
