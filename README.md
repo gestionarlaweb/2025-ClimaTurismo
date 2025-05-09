@@ -71,6 +71,7 @@ flutter run
 - Asegúrate de que `api_constants.dart` esté en `.gitignore` para no subir información sensible al repositorio.
 - La aplicación utiliza claves públicas, pero pueden externalizarse en un archivo `.env` si se desea.
 - Se puede instalar como PWA en iOS o Android desde el navegador.
+- Enlace https://fluffy-caramel-036f86.netlify.app/
 
 ---
 
